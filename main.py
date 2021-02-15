@@ -20,7 +20,7 @@ def detect_defect(data):
     while(row < data['die']['rows']*data['die']['columns']):
         numpydata = []
         for i in range(row+1, data['die']['columns']+row+ 1):
-            im = Image.open('Level_1_data\wafer_image_' + str(i) + '.png')
+            im = Image.open('Level_2_data\wafer_image_' + str(i) + '.png')
             numpydata.append(numpy.array(im))
         for care in range(len(data['care_areas'])):
             for y in range(data['care_areas'][care]['top_left']['x'], data['care_areas'][care]['bottom_right']['x']):
@@ -46,7 +46,7 @@ def detect_defect(data):
     return True
 
 ans = []
-f = open('Level_1_data\input.json', )
+f = open('Level_2_data\input.json', )
 data = json.load(f)
 d_ex = cc.defaultdict(int)
 Exclusion(data)

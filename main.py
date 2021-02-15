@@ -7,35 +7,33 @@ import csv
 f = open('Level_1_data\input.json', )
 data = json.load(f)
 ans = []
-for i in range(1,data['die']['columns']+1):
-    im = Image.open('Level_1_data\wafer_image_'+str(i)+'.png')
+numpydata = []
+for i in range(1, data['die']['columns'] + 1):
+    im = Image.open('Level_1_data\wafer_image_' + str(i) + '.png')
     px = im.load()
-    width,height = im.size
-    numpydata = numpy.array(im)
-    d = cc.defaultdict(int)
-    r = [data['care_areas'][0]['top_left']['x'],data['care_areas'][0]['bottom_right']['x']]
-    for x in range(len(numpydata)):
-        for y in range(len(numpydata[x])):
-            d[tuple(numpydata[x][y])] += 1
-    m1 = 0
-    m2 = 0
-    temp1 = ()
-    for z in d:
-        if(d[z] > m1):
-            temp2 = temp1
-            temp1 = z
-            m2 = m1
-            m1 = d[z]
-        elif(d[z] > m2):
-            temp2 = z
-            m2 = d[z]
-    for y in range(data['care_areas'][0]['top_left']['x'],data['care_areas'][0]['bottom_right']['x']):
-        for x in range(data['care_areas'][0]['bottom_right']['y'],data['care_areas'][0]['top_left']['y']):
-            if(tuple(numpydata[x][y]) != temp1 and tuple(numpydata[x][y]) != temp2):
-                ans.append([i,y,len(numpydata)-1-x])
+    width, height = im.size
+    numpydata.append(numpy.array(im))
 
+for y in range(data['care_areas'][0]['top_left']['x'], data['care_areas'][0]['bottom_right']['x']):
+    for x in range(data['care_areas'][0]['bottom_right']['y'],data['care_areas'][0]['top_left']['y']):
+        d = cc.defaultdict(int)
+        for i in range( data['die']['columns'] ):
+            d[tuple(numpydata[i][x][y])] += 1
+        m = 0
+        for z in d:
+            if(d[z] > m):
+                temp = z
+                m = d[z]
+        print(d)
+        if m == 1:
+            for i in range(data['die']['columns']):
+                ans.append([i+1,y,len(numpydata)-1-x])
+        else:
+            for i in range(data['die']['columns']):
+                if(tuple(numpydata[i][x][y]) != temp):
+                    ans.append([i+1,y,len(numpydata[i])-1-x])
+print(ans)
 with open("final.csv",'w') as csvfile:
     csvwriter = csv.writer(csvfile)
     csvwriter.writerows(ans)
-
 f.close()

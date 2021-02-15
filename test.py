@@ -39,33 +39,38 @@ def detect_defect(data):
                                     temp = z
                                     m = d[z]
                             if m == 1:
+                                """
                                 if(i-1 >= 0):
                                     if(d_ans[tuple([i-1 + row + 1, y, len(numpydata[i])-1-x])] == 0):
                                         ans.append([i-1 + row + 1, y, len(numpydata[i])-1-x])
                                         d_ans[tuple([i - 1 + row + 1, y, len(numpydata[i]) - 1 - x])] = 1
+                                """
                                 if(d_ans[tuple([i + row + 1, y, len(numpydata[i])-1-x])] == 0):
                                     ans.append([i + row + 1, y, len(numpydata[i]) - 1 - x])
                                     d_ans[tuple([i + row + 1, y, len(numpydata[i]) - 1 - x])] = 1
+                                """
                                 if(i+1 < data['die']['columns']):
                                     if(d_ans[tuple([i + 1 + row + 1, y, len(numpydata[i]) - 1 - x])] == 0):
                                         ans.append([i+1 + row + 1, y, len(numpydata[i]) - 1 - x])
                                         d_ans[tuple([i + 1 + row + 1, y, len(numpydata[i]) - 1 - x])] = 1
+                                """
                             else:
+                                """
                                 if(tuple(numpydata[i][x][y]) != temp):
                                     if (d_ans[tuple([i + row + 1, y, len(numpydata[i]) - 1 - x])] == 0):
                                         ans.append([i + row + 1, y, len(numpydata[i]) - 1 - x])
                                         d_ans[tuple([i + row + 1, y, len(numpydata[i]) - 1 - x])] = 1
-
+                                """
                                 if (i-1 >= 0 and tuple(numpydata[i-1][x][y]) != temp):
                                     if (d_ans[tuple([i - 1 + row + 1, y, len(numpydata[i]) - 1 - x])] == 0):
                                         ans.append([i - 1 + row + 1, y, len(numpydata[i]) - 1 - x])
                                         d_ans[tuple([i - 1 + row + 1, y, len(numpydata[i]) - 1 - x])] = 1
-
+                                """
                                 if (i+1 < data['die']['columns'] and tuple(numpydata[i+1][x][y]) != temp):
                                     if (d_ans[tuple([i + 1 + row + 1, y, len(numpydata[i]) - 1 - x])] == 0):
                                         ans.append([i + 1 + row + 1, y, len(numpydata[i]) - 1 - x])
                                         d_ans[tuple([i + 1 + row + 1, y, len(numpydata[i]) - 1 - x])] = 1
-
+                                """
         row += data['die']['columns']
     f.close()
     return True
